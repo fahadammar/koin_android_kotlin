@@ -14,6 +14,9 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
+        ksp {
+            arg("room.schemaLocation", "$projectDir/schemas")
+        }
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -70,8 +73,6 @@ dependencies {
     // Room components
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
-
-
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation(libs.androidx.room.ktx)
 

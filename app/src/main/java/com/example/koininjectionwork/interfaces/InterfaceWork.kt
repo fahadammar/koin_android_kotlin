@@ -1,6 +1,7 @@
 package com.example.koininjectionwork.interfaces
 
 import android.util.Log
+import com.example.koininjectionwork.utils.logTag
 
 interface FirstInterface{
     fun printFirstInterface()
@@ -13,16 +14,16 @@ interface SecondInterface{
 
 class SingleInterfaceImpl : FirstInterface{
     override fun printFirstInterface() {
-        Log.d("interfaceLogTag", "printFirstInterface: FIRST INTERFACE PRINT")
+        Log.d(logTag, "printFirstInterface: FIRST INTERFACE PRINT")
     }
 }
 
 class AllInterfaceImpl : FirstInterface, SecondInterface{
     override fun printFirstInterface() {
-        Log.d("interfaceLogTag", "printFirstInterface: FIRST INTERFACE PRINT")
+        Log.d(logTag, "printFirstInterface: FIRST INTERFACE PRINT")
     }
     override fun printSecondInterface() {
-        Log.d("interfaceLogTag", "printSecondInterface: SECOND INTERFACE PRINT")
+        Log.d(logTag, "printSecondInterface: SECOND INTERFACE PRINT")
     }
 }
 

@@ -1,14 +1,14 @@
 package com.example.koininjectionwork.classes
 
 import android.util.Log
+import com.example.koininjectionwork.ui.MainActivity
+import com.example.koininjectionwork.utils.logTag
 
-class HeadOfDepartment(private val name:String,
-                       private val department: String,
-                       private val salary : Int) {
+class HeadOfDepartment(private val dataObj : MainActivity.HeadOfDepartmentInfo) {
 
     fun getHODInfo() {
-        Log.d("HODInfo","Name : $name")
-        Log.d("HODInfo","Department : $department")
-        Log.d("HODInfo","Salary : $salary")
+        Log.d(logTag,"HODInfo- Name : ${dataObj.name}")
+        Log.d(logTag,"HODInfo- Department : ${dataObj.department}")
+        Log.d(logTag,"HODInfo- Salary : ${dataObj.salary}")
     }
 }

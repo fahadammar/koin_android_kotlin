@@ -1,7 +1,10 @@
 package com.example.koininjectionwork.classes
 
+import android.util.Log
+import com.example.koininjectionwork.utils.logTag
+
 class AirPlaneSession {
     fun getAirPlaneSession(){
-        println("Currently flying")
+        Log.d(logTag,"Currently flying")
     }
 }

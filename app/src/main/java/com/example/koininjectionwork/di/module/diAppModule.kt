@@ -4,6 +4,7 @@ import com.example.koininjectionwork.classes.AirPlaneSession
 import com.example.koininjectionwork.classes.Airplane
 import com.example.koininjectionwork.classes.HeadOfDepartment
 import com.example.koininjectionwork.classes.Pilot
+import com.example.koininjectionwork.classes.PrintInFragment
 import com.example.koininjectionwork.classes.SessionManager
 import com.example.koininjectionwork.classes.Student
 import com.example.koininjectionwork.classes.StudentSession
@@ -12,7 +13,9 @@ import com.example.koininjectionwork.classes.TeacherSession
 import com.example.koininjectionwork.classes.UserInfo
 import com.example.koininjectionwork.classes.Wings
 import com.example.koininjectionwork.ui.AnotherActivity
+import com.example.koininjectionwork.ui.JustAFragment
 import com.example.koininjectionwork.ui.MainActivity
+import com.example.koininjectionwork.ui.MainActivity.HeadOfDepartmentInfo
 import com.example.koininjectionwork.ui.MainViewModel
 import com.example.koininjectionwork.utils.MAIN_ACTIVITY_SCOPE
 import org.koin.core.module.dsl.viewModel
@@ -28,13 +31,16 @@ val diAppModule = module {
     // Koin will automatically understand the required dependencies and resolve them via get() when instantiating Airplane.
     factory { Airplane(get(), get()) }
     // Scope in Koin keeps objects alive only as long as their screen (Activity/Fragment) is alive.
-    scope<MainActivity> {
+    scope<MainActivity>{
         scoped { SessionManager() }
     }
-    scope(named(MAIN_ACTIVITY_SCOPE)){
+    scope<JustAFragment>{
+        scoped { PrintInFragment() }
+    }
+    scope<MainActivity>{
         scoped { AirPlaneSession() }
     }
-    scope(named(MAIN_ACTIVITY_SCOPE)){
+    scope<MainActivity>{
         scoped{ StudentSession() }
     }
     scope(named("TeacherSessionScope")){
@@ -61,6 +67,6 @@ val diAppModule = module {
     }
 
     single {
-        (name: String,department: String, salary: Int) -> HeadOfDepartment(name, department, salary)
+        (dataObj : HeadOfDepartmentInfo) -> HeadOfDepartment(dataObj)
     }
 }

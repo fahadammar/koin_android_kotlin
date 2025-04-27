@@ -1,6 +1,7 @@
 package com.example.koininjectionwork.classes
 
 import android.util.Log
+import com.example.koininjectionwork.utils.logTag
 
 class Teacher(
     private val name:String,
@@ -10,10 +11,10 @@ class Teacher(
     private val salary : Int
 ) {
     fun getTeacherInfo(){
-        Log.d("teacherInfo","Name : $name")
-        Log.d("teacherInfo","Subject : $subject")
-        Log.d("teacherInfo","Credit Hours : $creditHours")
-        Log.d("teacherInfo","Department : $department")
-        Log.d("teacherInfo","Salary : $salary")
+        Log.d(logTag,"TeacherInfo-Name : $name")
+        Log.d(logTag,"TeacherInfo-Subject : $subject")
+        Log.d(logTag,"TeacherInfo-Credit Hours : $creditHours")
+        Log.d(logTag,"TeacherInfo-Department : $department")
+        Log.d(logTag,"TeacherInfo-Salary : $salary")
     }
 }

@@ -5,7 +5,8 @@ import com.example.koininjectionwork.di.module.dataModule
 import com.example.koininjectionwork.di.module.diAppModule
 import com.example.koininjectionwork.di.module.interfaceModule
 import org.koin.android.ext.koin.androidContext
-import org.koin.core.context.startKoin
+import org.koin.core.context.GlobalContext.startKoin
+
 
 class MyApp : Application() {
     override fun onCreate() {

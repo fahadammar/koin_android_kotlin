@@ -1,6 +1,9 @@
 package com.example.koininjectionwork.classes
 
-// SessionManager.kt
+import android.util.Log
+import com.example.koininjectionwork.utils.logTag
+
+
 class SessionManager {
     private var sessionId: String = "Empty"
 
@@ -9,6 +12,7 @@ class SessionManager {
     }
 
     fun getSession(): String {
+        Log.d(logTag, "getSession: Called SessionManager")
         return sessionId
     }
 }

@@ -1,7 +1,9 @@
 package com.example.koininjectionwork.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -17,13 +19,20 @@ import com.example.koininjectionwork.data.api.apiViewModel.ApiViewModel
 import com.example.koininjectionwork.di.component.Component
 import com.example.koininjectionwork.utils.DEBUG_SERVER
 import com.example.koininjectionwork.utils.PRODUCTION_SERVER
+import com.example.koininjectionwork.utils.logTag
 import org.koin.android.ext.android.get
+import org.koin.android.ext.android.getKoin
 import org.koin.android.ext.android.inject
+import org.koin.android.scope.AndroidScopeComponent
+import org.koin.androidx.scope.activityScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import org.koin.core.qualifier.named
+import org.koin.core.scope.Scope
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), AndroidScopeComponent{
+    override val scope: Scope by activityScope()
+    val scope2 : Scope by lazy { getKoin().createScope(getServerName(), named(getServerName())) }
     private val sessionManager : SessionManager by inject()
     private val airPlaneSessionManager : AirPlaneSession by inject()
     private val mainViewModel : MainViewModel by viewModel()
@@ -32,6 +41,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var hod: HeadOfDepartment
     private val debugServer: Server by  lazy { get(named(DEBUG_SERVER)) }
     private val releaseServer: Server by  lazy { get(named(PRODUCTION_SERVER)) }
+    private val server: Server by lazy { scope2.get() }
     private val component = Component()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,8 +53,25 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        // Check if the fragment has already been added to avoid multiple instances
+        if (savedInstanceState == null) {
+            val fragment = JustAFragment()
 
+            // Begin the transaction to add the fragment
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, fragment) // Replace the FrameLayout with the fragment
+                .commit()
+        }
+        clickListener()
         outPuts()
+    }
+
+    private fun clickListener() {
+        val buttonClick = findViewById<Button>(R.id.button)
+        buttonClick.setOnClickListener {
+            val intent = Intent(this, AnotherActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun outPuts() {
@@ -71,10 +98,13 @@ class MainActivity : AppCompatActivity() {
         component.airPlane.fly()
 
         if(BuildConfig.DEBUG){
+            Log.d(logTag, "outPuts: --Qualifier--")
             debugServer.connect()
         } else {
             releaseServer.connect()
         }
+        Log.d(logTag, "outPuts: -- Scope Call below --")
+        server.connect()
 
         // calling the classes of the interface implementations
         component.callSingleInterface.callInterface()
@@ -87,4 +117,14 @@ class MainActivity : AppCompatActivity() {
         val department: String,
         val salary : Int
     )
+
+    override fun onDestroy() {
+        super.onDestroy()
+        scope.close()
+        scope2.close()
+    }
+
+    fun getServerName():String{
+        return if(BuildConfig.DEBUG) DEBUG_SERVER else PRODUCTION_SERVER
+    }
 }
