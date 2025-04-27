@@ -8,7 +8,7 @@ This README is based on deep exploration and real use-cases, updated to reflect 
 
 ## What is Koin?
 
-Koin is a lightweight dependency injection framework for Kotlin developers, designed to be pragmatic, simple, and powerful. It works without requiring annotation processing or heavy code generation.
+Koin is a lightweight dependency injection framework for developers, designed to be pragmatic, simple, and powerful. It works without requiring annotation processing or heavy code generation.
 
 ## Setting up Koin
 
