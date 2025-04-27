@@ -225,7 +225,7 @@ class Component : KoinComponent {
 ```
 ## Common Errors & Solutions
 
-If you encounter **Unresolved reference 'get'**, it usually means you forgot to implement **KoinComponent** or **KoinScopeComponent**; fix it by properly inheriting your class or using by **inject()**. If you see **NoDefinitionFoundException**, it's often because your module is missing or you provided a wrong qualifier; double-check your module setup and spelling. Finally, if you face **InstantiationException: no zero argument constructor**, it happens when you mistakenly inject dependencies into the constructor of an **Activity**; remember that Activities must have a no-argument constructor — always inject dependencies as properties instead.
+If you encounter **Unresolved reference 'get'**, it usually means you forgot to implement **KoinComponent** or **KoinScopeComponent**; fix it by properly inheriting your class or using by **inject()**. If you see **NoDefinitionFoundException**, it's often because your module is missing or you provided a wrong qualifier; double-check your module setup and spelling. Finally, if you face **InstantiationException: no zero argument constructor**, it happens when you mistakenly inject dependencies into the constructor of an **Activity**; remember that Activities must have a no-argument constructor always inject dependencies as properties instead.
 
 ## Best Practices
 
