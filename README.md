@@ -25,7 +25,7 @@ koin-android = { module = "io.insert-koin:koin-android" }
 koin-core = { module = "io.insert-koin:koin-core" }
 ```
 
-## Basic Concepts
+## Understanding Core Koin Concepts
 
 * **Module:** A container where you define how your dependencies are provided.
 
