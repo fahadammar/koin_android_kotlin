@@ -142,7 +142,7 @@ class SampleFragment : Fragment(), KoinScopeComponent {
 ### Important Notes:
 
 - Only call `scope.close()` for **manually created scopes**.
-- If you're using `activityScope()` or `fragmentScope()` via `AndroidScopeComponent`, **you don't need to close them manually** — Koin manages those automatically.
+- If you're using `activityScope()` or `fragmentScope()` via `AndroidScopeComponent`, **you don't need to close them manually** Koin manages those automatically.
 - Always match the **scope lifecycle** to the appropriate component (`onDestroy` for `Activity`, `onDestroyView` for `Fragment`) to avoid premature destruction or leaks.
 
 ## Defining Scoped Dependencies
