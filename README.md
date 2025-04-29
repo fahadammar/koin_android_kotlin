@@ -101,43 +101,50 @@ class MainActivity : AppCompatActivity(), AndroidScopeComponent {
     private val server: Server by lazy { dynamicScope.get() }
 }
 ```
-## Primitive types injection
 
-If your class constructor needs primitives like String, Int, etc., you can pass them using parametersOf().
+## Manually Closing Scopes
 
-**Example:**
+If you manually create scopes using `createScope()`, you **must close them explicitly** to prevent memory leaks.
+
+### Example: Manual Scope Closure in Activity
+
 ```
-class Engine(val model: String, val horsePower: Int)
+class MainActivity : AppCompatActivity(), KoinScopeComponent {
 
-val engineModule = module {
-    factory { (model: String, horsePower: Int) -> Engine(model, horsePower) }
+    // Custom scope with dynamic name
+    override val scope: Scope by lazy {
+        getKoin().createScope("CustomActivityScope", named("CustomActivityScope"))
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        scope.close() // Close the manually created scope
+    }
 }
-
-// Injecting
-private val engine: Engine = get(parameters = { parametersOf("V8", 500) })
 ```
-> [!WARNING]
-> If the order of parameters is wrong, your app may crash.
 
-## Using Qualifiers
+### Example: Manual Scope Closure in Fragment
 
-**When to use Qualifiers:**
-
-You have multiple definitions of the same type.
-
-You need to distinguish between them.
-
-**Example:**
 ```
-val serverModule = module {
-    single(named("DebugServer")) { Server("https://debug.server.com") }
-    single(named("ReleaseServer")) { Server("https://release.server.com") }
+class SampleFragment : Fragment(), KoinScopeComponent {
+
+    override val scope: Scope by lazy {
+        getKoin().createScope("CustomFragmentScope", named("CustomFragmentScope"))
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        scope.close() // Close the manually created scope
+    }
 }
-
-// Inject
-private val debugServer: Server by inject(named("DebugServer"))
-private val releaseServer: Server by inject(named("ReleaseServer"))
 ```
+
+### Important Notes:
+
+- Only call `scope.close()` for **manually created scopes**.
+- If you're using `activityScope()` or `fragmentScope()` via `AndroidScopeComponent`, **you don't need to close them manually** — Koin manages those automatically.
+- Always match the **scope lifecycle** to the appropriate component (`onDestroy` for `Activity`, `onDestroyView` for `Fragment`) to avoid premature destruction or leaks.
+
 ## Defining Scoped Dependencies
 ```
 val scopedModule = module {
@@ -192,6 +199,43 @@ class MainActivity : AppCompatActivity(), AndroidScopeComponent {
 ```
 
 
+## Primitive types injection
+
+If your class constructor needs primitives like String, Int, etc., you can pass them using parametersOf().
+
+**Example:**
+```
+class Engine(val model: String, val horsePower: Int)
+
+val engineModule = module {
+    factory { (model: String, horsePower: Int) -> Engine(model, horsePower) }
+}
+
+// Injecting
+private val engine: Engine = get(parameters = { parametersOf("V8", 500) })
+```
+> [!WARNING]
+> If the order of parameters is wrong, your app may crash.
+
+## Using Qualifiers
+
+**When to use Qualifiers:**
+
+You have multiple definitions of the same type.
+
+You need to distinguish between them.
+
+**Example:**
+```
+val serverModule = module {
+    single(named("DebugServer")) { Server("https://debug.server.com") }
+    single(named("ReleaseServer")) { Server("https://release.server.com") }
+}
+
+// Inject
+private val debugServer: Server by inject(named("DebugServer"))
+private val releaseServer: Server by inject(named("ReleaseServer"))
+```
 ## Lazy vs Eager Injection
 
 **Lazy:**
