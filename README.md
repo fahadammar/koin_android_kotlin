@@ -2,7 +2,24 @@
 # Koin <img src="https://insert-koin.io/img/koin_new_logo.png" alt="Koin Logo" width="35" height="35"> Dependency Injection - Android
 
 #### 🔗 Connect & Follow Me
-[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/fahadammar)
+
+<span style="display: inline-block; margin-right: 10px;">
+  <a href="https://www.linkedin.com/in/fahadammar" target="_blank" style="text-decoration:none;">
+    <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn Badge"/>
+  </a>
+</span>
+<span style="display: inline-block;">
+  <a href="https://github.com/fahadammar" target="_blank" style="text-decoration:none;">
+    <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Badge"/>
+  </a>
+</span>
+
+
+
+
+
+
+
 
 This README is based on deep exploration and real use-cases, updated to reflect best practices, common pitfalls, and correct ways to work with Koin (especially with latest versions).
 
